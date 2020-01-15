@@ -1,5 +1,7 @@
 # Text backup files
 *.bak
+*.vscode
+.vscode
 
 #Database
 *.sqlite3

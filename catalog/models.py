@@ -7,7 +7,8 @@ class Genre(models.Model):
     def __str__(self):
         #Cadena que representa a la instancia particular del modelo (p. ej. en el sitio de Administración)
         #simplemente devuelve el nombre de un género definido por un registro en particular.
-        # Como no hemos definido un nombre explicativo (verbose_name) para nuestro campo, éste se establecerá en Name y se mostrará de esa manera en los formularios.
+        # Como no hemos definido un nombre explicativo (verbose_name) para nuestro campo,
+        # éste se establecerá en Name y se mostrará de esa manera en los formularios.
         return self.types
  
 class Book(models.Model):
@@ -34,8 +35,10 @@ class BookInstance(models.Model):
     """
     Modelo que representa una copia específica de un libro (i.e. que puede ser prestado por la biblioteca).
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="ID único para este libro particular en toda la biblioteca")
-    book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True) 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4
+                          , help_text="ID único para este libro particular en toda la biblioteca")
+    book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
     imprint = models.CharField(max_length=200)
     due_back = models.DateField(null=True, blank=True)
 
@@ -65,8 +68,10 @@ class BookInstance(models.Model):
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    nationality = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField('Died', null=True, blank=True)
+    #queda pendiente el ingreso de foto y otros detalles que se vallan ocurriendo.  
     
     def get_absolute_url(self):
         """
@@ -80,3 +85,9 @@ class Author(models.Model):
         String para representar el Objeto Modelo
         """
         return '%s, %s' % (self.last_name, self.first_name)
+
+class Language(models.Model):
+    idiom=models.CharField(max_length=20, help_text='get in the language')
+
+    def __str__(self):
+        return self.idiom
