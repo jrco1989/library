@@ -32,6 +32,16 @@ class Book(models.Model):
     devuelve un URL que puede ser usado para acceder al detalle de un registro particular
      (para que esto funcione, debemos definir un mapeo de URL que tenga el nombre book-detail
       y una vista y una plantilla asociadas a él) """
+    def display_genre(self):
+        """
+        Creates a string for the Genre. This is required to display genre in Admin.
+        Esto crea una cadena con los tres primeros valores del campo genre (si existen) y crea una short_description 
+        (descripción corta) que puede ser usada en el sitio de administración por este método.
+        """
+        return ', '.join([ genre.types for genre in self.genre.all()[:3] ])
+    display_genre.short_description = 'Genre'
+
+    
 
 class BookInstance(models.Model):
     """
