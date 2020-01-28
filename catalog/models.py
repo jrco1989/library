@@ -26,6 +26,7 @@ class Book(models.Model):
         return self.title
     def get_absolute_url(self):
         # Devuelve el URL a una instancia particular de Book
+        #en el administrador adiciona un vinculo sobre el nombre que añade los botones de delete, history  and view on site
         return reverse('book-detail', args=[str(self.id)]) #consultar a ivan 
     """
     devuelve un URL que puede ser usado para acceder al detalle de un registro particular
@@ -63,7 +64,7 @@ class BookInstance(models.Model):
         """
         String para representar el Objeto del Modelo
         """
-        return '%s (%s)' % (self.id,self.book.title)
+        return '%s (  %s) (  %s) (  %s)' % (self.id,self.book.title, self.book.author, self.language)
         #El patrón __str__() representa el objeto BookInstance usando una 
         # combinación de  su id único y el título del  Book asociado
 
@@ -84,7 +85,7 @@ class Author(models.Model):
 
     def __str__(self):
         """
-        String para representar el Objeto Modelo
+        String para representar el Objeto Modelo en administrador
         """
         return '%s, %s' % (self.last_name, self.first_name)
 
