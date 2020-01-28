@@ -10,7 +10,7 @@ Esta aplicación te permite:
     -Crear libros
     -consultar los libros almacenados
     -solicitar el prestamos de los libros e indicarte una fecha de devolución
-    -un módulo de administrador personalizado con filtros, vistas detalladas. 
+    -un módulo de administrador personalizado con filtros y vistas detalladas. 
 
 
 Herramientas requeridas:
