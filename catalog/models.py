@@ -15,11 +15,12 @@ class Book(models.Model):
     title=models.CharField(max_length=100, help_text="enter the book's name")
     author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     #null=True, permite ingresar a la base de datos aun cuando el autor no ha sido seleccionado
-    #on_delete=models.SET_NULL, pondrá el campo Null si el auto llega a ser elminado
+    #on_delete=models.SET_NULL, pondrá el campo Null si el autor llega a ser elminado
     summary=models.TextField(max_length=1000, help_text="insert a short description")
     isbn = models.CharField('ISBN',max_length=13, help_text='13 Caracteres <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     #isbn=models.Charfield(max_length=50, help_text="enter the ISBN  international standard book number,")
     genre=models.ManyToManyField(Genre, help_text="Seleccione un genero para este libro")
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.title
@@ -57,6 +58,7 @@ class BookInstance(models.Model):
         # El patrón metadata (Class Meta) usa este campo para ordenar 
         # registros cuando se retornan en una consulta.
 
+
     def __str__(self):
         """
         String para representar el Objeto del Modelo
@@ -68,7 +70,7 @@ class BookInstance(models.Model):
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    nationality = models.CharField(max_length=100)
+    #nationality = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField('Died', null=True, blank=True)
     #queda pendiente el ingreso de foto y otros detalles que se vallan ocurriendo.  
