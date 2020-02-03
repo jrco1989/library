@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %}<title>Local Library index</title>{% endblock %}
 
 {% block content %}
 <h1>Local Library Home</h1>
@@ -11,8 +12,11 @@
   <ul>
     <li><strong>Books:</strong> {{ num_books }}</li>
     <li><strong>Copies:</strong> {{ num_instances }}</li>
-    <li><strong>Copies available:</strong> {{ num_instances_available }}</li>
+    <li><stong>Copies available:</stong> {{ num_instances_available }}</li>
     <li><strong>Authors:</strong> {{ num_authors }}</li>
+    <li><strong>Genres:</strong> {{ num_genres }}</li>
+    
   </ul>
+  
 
 {% endblock %}
