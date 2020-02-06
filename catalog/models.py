@@ -84,7 +84,8 @@ class Author(models.Model):
     #nationality = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField('Died', null=True, blank=True)
-    #queda pendiente el ingreso de foto y otros detalles que se vallan ocurriendo.  
+    
+    #queda pendiente el ingreso de foto y otros detalles que se vayan ocurriendo.  
     
     def get_absolute_url(self):
         """
