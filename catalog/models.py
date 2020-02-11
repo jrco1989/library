@@ -71,9 +71,7 @@ class BookInstance(models.Model):
 
 
     def __str__(self):
-        """
-        String para representar el Objeto del Modelo
-        """
+        
         return '%s (  %s) (  %s) (  %s)' % (self.id,self.book.title, self.book.author, self.language)
         #El patrón __str__() representa el objeto BookInstance usando una 
         # combinación de  su id único y el título del  Book asociado
