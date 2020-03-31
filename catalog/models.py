@@ -3,7 +3,11 @@ import uuid # Requerida para las instancias de libros únicos
 from django.urls import reverse #Used to generate URLs by reversing the URL patterns
 
 class Genre(models.Model):
-    types=models.CharField(max_length=200, help_text="enter the genre of the book")
+    types=models.CharField(
+        max_length=200, 
+        help_text="enter the genre of the book"
+    )
+
     def __str__(self):
         #Cadena que representa a la instancia particular del modelo (p. ej. en el sitio de Administración)
         #simplemente devuelve el nombre de un género definido por un registro en particular.
@@ -12,26 +16,55 @@ class Genre(models.Model):
         return self.types
  
 class Book(models.Model):
-    title=models.CharField(max_length=100, help_text="enter the book's name")
-    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
+    title=models.CharField(
+        max_length=100, 
+        help_text="enter the book's name"
+    )
+
+    author = models.ForeignKey(
+        'Author', 
+        on_delete=models.SET_NULL, 
+        null=True
+    )
+
     #null=True, permite ingresar a la base de datos aun cuando el autor no ha sido seleccionado
     #on_delete=models.SET_NULL, pondrá el campo Null si el autor llega a ser elminado
-    summary=models.TextField(max_length=1000, help_text="insert a short description")
-    isbn = models.CharField('ISBN',max_length=13, help_text='13 Caracteres <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
+    
+    summary=models.TextField(
+        max_length=1000, 
+        help_text="insert a short description"
+    )
+
+    isbn = models.CharField(
+        'ISBN',
+        max_length=13, 
+        help_text='13 Caracteres <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>'
+    )
     #isbn=models.Charfield(max_length=50, help_text="enter the ISBN  international standard book number,")
-    genre=models.ManyToManyField(Genre, help_text="Seleccione un genero para este libro")
-    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
+    
+    genre=models.ManyToManyField(
+        Genre, 
+        help_text="Seleccione un genero para este libro"
+    )
+
+    language = models.ForeignKey(
+        'Language', 
+        on_delete=models.SET_NULL, 
+        null=True
+    )
 
     def __str__(self):
         return self.title
+        
     def get_absolute_url(self):
         # Devuelve el URL a una instancia particular de Book
         #en el administrador adiciona un vinculo sobre el nombre que añade los botones de delete, history  and view on site
-        return reverse('book-detail', args=[str(self.id)]) #consultar a ivan 
+        return reverse('book-detail', args=[str(self.id)])
     """
     devuelve un URL que puede ser usado para acceder al detalle de un registro particular
      (para que esto funcione, debemos definir un mapeo de URL que tenga el nombre book-detail
       y una vista y una plantilla asociadas a él) """
+    
     def display_genre(self):
         """
         Creates a string for the Genre. This is required to display genre in Admin.
@@ -39,6 +72,7 @@ class Book(models.Model):
         (descripción corta) que puede ser usada en el sitio de administración por este método.
         """
         return ', '.join([ genre.types for genre in self.genre.all()[:3] ])
+   
     display_genre.short_description = 'Genre'
 
     
@@ -47,12 +81,32 @@ class BookInstance(models.Model):
     """
     Modelo que representa una copia específica de un libro (i.e. que puede ser prestado por la biblioteca).
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4
-                          , help_text="ID único para este libro particular en toda la biblioteca")
-    book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
-    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True)
-    imprint = models.CharField(max_length=200)
-    due_back = models.DateField(null=True, blank=True)
+    id = models.UUIDField(
+        primary_key=True, 
+        default=uuid.uuid4, 
+        help_text="ID único para este libro particular en toda la biblioteca"
+    )
+
+    book = models.ForeignKey(
+        'Book',
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    language = models.ForeignKey(
+        'Language',
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    imprint = models.CharField(
+        max_length=200
+    )
+    
+    due_back = models.DateField(
+        null=True,
+        blank=True
+    )
 
     LOAN_STATUS = (
         ('m', 'Maintenance'),
@@ -61,8 +115,12 @@ class BookInstance(models.Model):
         ('r', 'Reserved'),
     )
 
-    status = models.CharField(max_length=1, choices=LOAN_STATUS, 
-                                blank=True, default='m', help_text='Disponibilidad del libro')
+    status = models.CharField(
+        max_length=1, 
+        choices=LOAN_STATUS, 
+        blank=True, default='m', 
+        help_text='Disponibilidad del libro'
+    )
 
     class Meta:
         ordering = ["due_back"]
@@ -72,16 +130,33 @@ class BookInstance(models.Model):
 
     def __str__(self):
         
-        return '%s (  %s) (  %s) (  %s)' % (self.id,self.book.title, self.book.author, self.language)
+        #return '%s (  %s) (  %s) (  %s)' % (self.id,self.book.title, self.book.author, self.language)
+        return '{} {} {} {} ' .format(self.id,self.book.title, self.book.author, self.language)
         #El patrón __str__() representa el objeto BookInstance usando una 
         # combinación de  su id único y el título del  Book asociado
 
 class Author(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+
+    first_name = models.CharField(
+        max_length=100
+    )
+
+    last_name = models.CharField(
+        max_length=100
+    )
+
     #nationality = models.CharField(max_length=100)
-    date_of_birth = models.DateField(null=True, blank=True)
-    date_of_death = models.DateField('Died', null=True, blank=True)
+    
+    date_of_birth = models.DateField(
+        null=True, 
+        blank=True
+    )
+
+    date_of_death = models.DateField(
+        'Died', 
+        null=True, 
+        blank=True
+    )
     
     #queda pendiente el ingreso de foto y otros detalles que se vayan ocurriendo.  
     
@@ -99,7 +174,11 @@ class Author(models.Model):
         return '%s, %s' % (self.last_name, self.first_name)
 
 class Language(models.Model):
-    idiom=models.CharField(max_length=20, help_text='get in the language')
+
+    idiom=models.CharField(
+        max_length=20, 
+        help_text='enter the language'
+    )
 
     def __str__(self):
         return self.idiom

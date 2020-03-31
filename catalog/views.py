@@ -9,11 +9,16 @@ def index(request):
     """
     # Genera contadores de algunos de los objetos principales
     num_books=Book.objects.all()
+
     num_books=num_books.count()
+
     num_instances=BookInstance.objects.all().count()
+
     # Libros disponibles (status = 'a')
     num_instances_available=BookInstance.objects.filter(status='a').count()
+
     num_authors=Author.objects.all().count()
+
     num_genres=Genre.objects.all().count()
     
     
