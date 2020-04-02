@@ -1,6 +1,8 @@
+from django.contrib.auth.models import User
 from django.db import models
-import uuid # Requerida para las instancias de libros únicos
 from django.urls import reverse #Used to generate URLs by reversing the URL patterns
+
+import uuid # Requerida para las instancias de libros únicos
 
 class Genre(models.Model):
     types=models.CharField(
@@ -74,9 +76,7 @@ class Book(models.Model):
         return ', '.join([ genre.types for genre in self.genre.all()[:3] ])
    
     display_genre.short_description = 'Genre'
-
     
-
 class BookInstance(models.Model):
     """
     Modelo que representa una copia específica de un libro (i.e. que puede ser prestado por la biblioteca).
@@ -121,7 +121,7 @@ class BookInstance(models.Model):
         blank=True, default='m', 
         help_text='Disponibilidad del libro'
     )
-
+   
     class Meta:
         ordering = ["due_back"]
         # El patrón metadata (Class Meta) usa este campo para ordenar 
@@ -171,7 +171,8 @@ class Author(models.Model):
         """
         String para representar el Objeto Modelo en administrador
         """
-        return '%s, %s' % (self.last_name, self.first_name)
+        #return '%s, %s' % (self.last_name, self.first_name)
+        return '{}, {}'.format(self.last_name, self.first_name)
 
 class Language(models.Model):
 
@@ -182,3 +183,30 @@ class Language(models.Model):
 
     def __str__(self):
         return self.idiom
+
+
+class Book_readed(models.Model):
+    
+    book_readed=models.OneToOneField(BookInstance, on_delete=models.CASCADE, null=True)
+    
+    STATE_CHOICES = (
+        (True, u'Yes'),
+        (False, u'No'),
+    )
+    is_readed = models.BooleanField(
+        verbose_name=u'Is it readed?',
+        default=False,
+        choices=STATE_CHOICES,
+    )
+    def __str__(self):
+        return '{}: {}'.format(self.book_readed.book.title, self.book_readed.book.author)
+
+class Profile (models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    phone=models.CharField(blank=True, max_length=12)
+    state=models.ManyToManyField(Book_readed, blank=True)
+	#picture=models.ImageField(upload_to='user/imagens',blank=True, null=True)
+    created=models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return '{}'.format(self.user)

@@ -30,13 +30,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">consulta</a>
+            <a class="nav-link js-scroll-trigger" href="#about">Descrube</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#services">resgísrate</a>
+            <a class="nav-link js-scroll-trigger" href="#services">Consulta</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">asesórate</a>
+            <a class="nav-link js-scroll-trigger" href="#contact">resgísrate</a>
           </li>
         </ul>
       </div>
@@ -66,13 +66,18 @@
       <div class="row">
         <div class="col-lg-8 mx-auto">
           <h2>About this page</h2>
-          <p class="lead">Este espacio está destinado para llevar el registro de los libros que conservo, llevar un registro de los libros que he leído y d elos libros que tengo prestado. 
-                          Todo lo anterior, se registra simulando el ambiente de un apequeña biblioteca, es por esto que se generan los siguientes listados:</p>
+          <p class="lead">Este espacio está destinado para llevar un control de los libros que tengo almacenados físicamente con el proposito de darme cuenta cuáles libros he leído y conocer los que me interesaría leer. </p>
+          <p class="lead">Todo lo anterior, se registra simulando el ambiente de una pequeña biblioteca. Los siguientes listados están habilitados para explorar el contenido de la biblioteca:</p>              
+            
           <ul>
             <li><a class="btn btn-default" role="button" href="{%url 'books'%}"> listado de libros</a></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li><a class="btn btn-default" role="button" href="">cantidad de authores registrados: {{num_authors}} </a></li>
+            {% if user.is_authenticated %}
+            <li><a class="btn btn-default" role="button"  href="">libros leídos: {{num_readed}} </a>      
+              {% else %}
+              <a href="" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+              {% endif %}</li>
+              <li><a class="btn btn-default" role="button" href="">En un total de: {{num_genres}} géneros  </a>
           </ul>
         </div>
       </div>
@@ -85,8 +90,18 @@
         <div class="col-lg-8 mx-auto">
           <h2>Libros</h2>
           <p class="lead">Actualmente contamos con <strong>{{num_books}}</strong> libros en coleeción y  <strong>{{num_instances_available}}</strong> disponibles, </p>
-          <p class="lead"><strong>{{num_authors}}</strong> autores registrados </p>
-          <p class="lead">en más de <strong>{{num_genres}}</strong> generos </p>
+          <p class="lead"><strong>{{num_authors}}</strong> autores registrados en más de <strong>{{num_genres}}</strong> generos  </p>
+          <p class="lead">Los siguientes listados están habilitados para explorar el contenido de la biblioteca:</p>              
+            
+          <ul>
+            <li><a class="btn btn-default" role="button" href="{%url 'books'%}"> listado de libros</a></li>
+            <li><a class="btn btn-default" role="button" href="">cantidad de authores registrados: {{num_authors}} </a></li>
+            {% if user.is_authenticated %}
+            <li><a class="btn btn-default" role="button"  href="">libros leídos: </a>      
+              {% else %}
+              <a href="" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+              {% endif %}</li>
+              <li><a class="btn btn-default" role="button" href="">En un total de: {{num_genres}} géneros  </a>
         </div>
       </div>
     </div>

@@ -1,7 +1,13 @@
+from .models import Author
+from .models import Book
+from .models import BookInstance
+from .models import Genre
+from .models import Profile
+
 from django.shortcuts import render
 from django.views import generic
 
-from .models import Book, Author, BookInstance, Genre
+
 
 def index(request):
     """
@@ -20,7 +26,8 @@ def index(request):
     num_authors=Author.objects.all().count()
 
     num_genres=Genre.objects.all().count()
-    
+
+    num_readed=Profile.objects.filter(state__is_readed=True).count()
     
     # Renderiza la plantilla HTML index.html con los datos en la variable contexto
     return render(
@@ -30,13 +37,14 @@ def index(request):
                  'num_instances':num_instances,
                  'num_instances_available':num_instances_available,
                  'num_authors':num_authors,
-                 'num_genres':num_genres},
+                 'num_genres':num_genres,
+                 'num_readed':num_readed},
     )
 
 class BookListView(generic.ListView):
     
     model = Book
-    paginate_by = 2 # se realiza la paginación para que no cargue todos los registros al tiempo y paginarlos, esto mejora el rendimiento
+    paginate_by = 20 # se realiza la paginación para que no cargue todos los registros al tiempo y paginarlos, esto mejora el rendimiento
     #context_object_name = 'book'   # your own name for the list as a template variable
     #queryset = Book.objects.filter(title__icontains='c')[:5] # Get 5 books containing the title war
     #"""def get_queryset(self): #esta función se encarga de obtener los objetos del modelo

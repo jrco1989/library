@@ -2,8 +2,10 @@ from django.contrib import admin
 from .models import Author
 from .models import Book
 from .models import BookInstance
+from .models import Book_readed
 from .models import Genre
 from .models import Language
+from .models import Profile
 
 
 #admin.site.register(Author)
@@ -28,11 +30,14 @@ class BookAdmin(admin.ModelAdmin):
 #admin.site.register(BookInstance)
 @admin.register(BookInstance) 
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display=('status','due_back')
+    list_display=('status','due_back','book')
     list_filter = ('status', 'due_back') #para filtrar los campos 
+
 
 
 
 
 admin.site.register(Genre)
 admin.site.register(Language)
+admin.site.register(Book_readed)
+admin.site.register(Profile)
