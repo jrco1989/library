@@ -1,0 +1,21 @@
+{%extends "base2.html"%}
+
+{% block title %} <title>Author's details</title>{% endblock %}
+
+{% block content %}
+<div style="margin-left:20px;margin-top:20px">
+  <h1>{{author.first_name}}  {{ author.last_name }}</h1>
+
+  <p><strong>Date of birth:</strong> {{author.date_of_birth}} </p> 
+  {%if author.date_of_death%}<p><strong>Date of death :</strong> {{author.date_of_death}}</p>{% endif %}  
+</div>
+  <div style="margin-left:40px;margin-top:20px">
+    <h4>Books written</h4>
+
+    {% for book in author.book_set.all %}
+    <hr>
+    <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
+    <li><a href="{% url 'book-detail' book.pk %}">{{book.title}}</a></l1>
+    {% endfor %}
+  </div>
+{% endblock %}

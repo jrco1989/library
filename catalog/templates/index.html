@@ -69,16 +69,7 @@
           <p class="lead">Este espacio está destinado para llevar un control de los libros que tengo almacenados físicamente con el proposito de darme cuenta cuáles libros he leído y conocer los que me interesaría leer. </p>
           <p class="lead">Todo lo anterior, se registra simulando el ambiente de una pequeña biblioteca. Los siguientes listados están habilitados para explorar el contenido de la biblioteca:</p>              
             
-          <ul>
-            <li><a class="btn btn-default" role="button" href="{%url 'books'%}"> listado de libros</a></li>
-            <li><a class="btn btn-default" role="button" href="">cantidad de authores registrados: {{num_authors}} </a></li>
-            {% if user.is_authenticated %}
-            <li><a class="btn btn-default" role="button"  href="">libros leídos: {{num_readed}} </a>      
-              {% else %}
-              <a href="" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
-              {% endif %}</li>
-              <li><a class="btn btn-default" role="button" href="">En un total de: {{num_genres}} géneros  </a>
-          </ul>
+          
         </div>
       </div>
     </div>
@@ -95,13 +86,14 @@
             
           <ul>
             <li><a class="btn btn-default" role="button" href="{%url 'books'%}"> listado de libros</a></li>
-            <li><a class="btn btn-default" role="button" href="">cantidad de authores registrados: {{num_authors}} </a></li>
+            <li><a class="btn btn-default" role="button" href="{%url 'authors' %}">cantidad de authores registrados: {{num_authors}} </a></li>
             {% if user.is_authenticated %}
-            <li><a class="btn btn-default" role="button"  href="">libros leídos: </a>      
+            <li><a class="btn btn-default" role="button"  href="">libros leídos: {{num_readed}} </a>      
               {% else %}
               <a href="" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
               {% endif %}</li>
               <li><a class="btn btn-default" role="button" href="">En un total de: {{num_genres}} géneros  </a>
+          </ul>
         </div>
       </div>
     </div>
