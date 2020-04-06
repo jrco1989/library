@@ -184,7 +184,6 @@ class Language(models.Model):
     def __str__(self):
         return self.idiom
 
-
 class Book_readed(models.Model):
     
     book_readed=models.OneToOneField(BookInstance, on_delete=models.CASCADE, null=True)
