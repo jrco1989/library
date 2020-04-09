@@ -1,3 +1,4 @@
+from datetime import date
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse #Used to generate URLs by reversing the URL patterns
@@ -121,6 +122,12 @@ class BookInstance(models.Model):
         blank=True, default='m', 
         help_text='Disponibilidad del libro'
     )
+    borrower = models.ForeignKey(
+        'Profile',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
    
     class Meta:
         ordering = ["due_back"]
@@ -134,6 +141,12 @@ class BookInstance(models.Model):
         return '{} {} {} {} ' .format(self.id,self.book.title, self.book.author, self.language)
         #El patrón __str__() representa el objeto BookInstance usando una 
         # combinación de  su id único y el título del  Book asociado
+    
+    @property
+    def is_overdue(self):
+        if self.due_back and date.today() > self.due_back:
+            return True
+        return False
 
 class Author(models.Model):
 
@@ -184,11 +197,13 @@ class Language(models.Model):
     def __str__(self):
         return self.idiom
 
-
 class Book_readed(models.Model):
     
-    book_readed=models.OneToOneField(BookInstance, on_delete=models.CASCADE, null=True)
-    
+    book_readed=models.OneToOneField(
+        BookInstance,
+        on_delete=models.CASCADE, 
+        null=True
+    )
     STATE_CHOICES = (
         (True, u'Yes'),
         (False, u'No'),
@@ -202,9 +217,19 @@ class Book_readed(models.Model):
         return '{}: {}'.format(self.book_readed.book.title, self.book_readed.book.author)
 
 class Profile (models.Model):
-    user=models.OneToOneField(User, on_delete=models.CASCADE)
-    phone=models.CharField(blank=True, max_length=12)
-    state=models.ManyToManyField(Book_readed, blank=True)
+    
+    user=models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+        )
+    phone=models.CharField(
+        blank=True, 
+        max_length=12
+    )
+    state=models.ManyToManyField(
+        Book_readed, 
+        blank=True
+    )
 	#picture=models.ImageField(upload_to='user/imagens',blank=True, null=True)
     created=models.DateTimeField(auto_now_add=True)
     

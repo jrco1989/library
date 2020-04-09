@@ -4,11 +4,16 @@ from .models import BookInstance
 from .models import Genre
 from .models import Profile
 
+from django.contrib.auth import authenticate
+from django.contrib.auth import  login
+from django.contrib.auth import  logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views import generic
 
-
-
+ 
 def index(request):
     """
     Función vista para la página inicio del sitio.
@@ -78,5 +83,10 @@ class AuthorListView (generic.ListView):
 class AuthorDetailView(generic.DetailView):
     model = Author
     paginate_by=1
-   
+ 
+@login_required
+def partida(request):
+	logout(request)
+	return render (request, 'registration/logged.html')
+    #return redirect ('login')
 
