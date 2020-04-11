@@ -123,7 +123,7 @@ class BookInstance(models.Model):
         help_text='Disponibilidad del libro'
     )
     borrower = models.ForeignKey(
-        'Profile',
+        User,
         on_delete=models.SET_NULL,
         null=True,
         blank=True
@@ -134,6 +134,7 @@ class BookInstance(models.Model):
         # El patrón metadata (Class Meta) usa este campo para ordenar 
         # registros cuando se retornan en una consulta.
 
+        permissions = (("can_mark_returned", "Set book as returned"),) 
 
     def __str__(self):
         

@@ -36,3 +36,10 @@ urlpatterns = [
 
 
 ]
+urlpatterns += [   
+    path(
+        route='mybooks/',
+        view= views.LoanedBooksByUserListView.as_view(), 
+        name='my-borrowed'
+        ),
+]
