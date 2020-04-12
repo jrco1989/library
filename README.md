@@ -2,16 +2,26 @@
 "Etapa: En desarrollo"
 
 
-Aplicación que simula un sistema para control del almacenamiento de los libros en una bilbioteca.
-En esta ocación la adapté para registrar los libros que poseo y simula run entorno de almacenamiento. 
+Aplicación que simula el funcinamiento de una pequeña bilbioteca que complemento al mostrar información de los libros y sus autores, y generando un perfil de usuario más personalizado.
 
-Adicionalmente se exitende para mostrar información detalladada de los libros y sus autores. 
-Esta aplicación te permite:
-    -Crear libros
-    -consultar los libros almacenados
-    -solicitar el prestamos de los libros e indicarte una fecha de devolución
-    -un módulo de administrador personalizado con filtros y vistas detalladas. 
+Los usuarios están dividios en dos grupos, usurarios comunes y trabajadores de la bilbioteca que tendrán permisos para realiazar ciertas tareas. 
 
+Esta aplicación le permite a los usuarios:
+    
+    -registrarse  /NO
+    -consultar los libros almacenados por título o author.
+    -consultar los libros que has leído y los que tienes reservados /No
+    -Reservar libros para préstamo /No
+    
+
+
+Y a los usuarios con permisos:   
+    -Crear libros y authores /No
+    -Cambiar el estado de los libros /No
+    -Cambiar y consultar el estado de todos los libros (resaltando los libros con fechas de devolución vencidas).  /No
+
+    
+Esta aplicación contiene un módulo de administrador personalizado con filtros y vistas detalladas. 
 
 Herramientas requeridas:
  -Django  3.0.2

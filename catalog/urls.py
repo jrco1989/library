@@ -33,6 +33,11 @@ urlpatterns = [
         view=views.login, 
         name='login'
         ),
+    path(
+        route='allstatusbooks/', 
+        view=views.AllBorrowedListView.as_view(), 
+        name='all-status'
+        ),
 
 
 ]

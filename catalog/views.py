@@ -9,23 +9,20 @@ from django.contrib.auth import  login
 from django.contrib.auth import  logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.views import generic
 
  
 def index(request):
-    """
-    Función vista para la página inicio del sitio.
-    """
-    # Genera contadores de algunos de los objetos principales
+   
     num_books=Book.objects.all()
 
     num_books=num_books.count()
 
     num_instances=BookInstance.objects.all().count()
 
-    # Libros disponibles (status = 'a')
     num_instances_available=BookInstance.objects.filter(status='a').count()
 
     num_authors=Author.objects.all().count()
@@ -33,8 +30,7 @@ def index(request):
     num_genres=Genre.objects.all().count()
 
     num_readed=Profile.objects.filter(state__is_readed=True).count()
-    
-    # Renderiza la plantilla HTML index.html con los datos en la variable contexto
+
     return render(
         request,
         'index.html',
@@ -100,3 +96,13 @@ class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
     
     def get_queryset(self):
         return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+
+class AllBorrowedListView(PermissionRequiredMixin, generic.ListView):
+    permission_required = 'catalog.can_mark_returned'
+    model= BookInstance
+    template_name='catalog/all_borrowed_books.html'
+    paginate_by=10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(status__exact='o')
+
