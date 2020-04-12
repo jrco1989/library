@@ -31,14 +31,11 @@ def index(request):
 
     num_readed=Profile.objects.filter(state__is_readed=True).count()
 
-<<<<<<< HEAD
     num_visits=request.session.get('num_visits', 0)
     
     request.session['num_visits'] = num_visits+1
     
     # Renderiza la plantilla HTML index.html con los datos en la variable contexto
-=======
->>>>>>> C8
     return render(
         request,
         'index.html',
