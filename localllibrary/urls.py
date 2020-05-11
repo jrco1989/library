@@ -31,7 +31,3 @@ urlpatterns += [
         view= include('django.contrib.auth.urls'
         )),
 ]
-
-
-
-#path('catalog/', include('catalog.urls')), #use include ()to add paths from the catalog application

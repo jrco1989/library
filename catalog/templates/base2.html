@@ -70,10 +70,11 @@
           <li><a href="{% url 'my-borrowed' %}">My Borrowed</a></li>
           {% if perms.catalog.can_mark_returned %}
           <li><a href="{%url 'all-status' %}">All borrowed</a></li>
+          
     <!-- We can mark a BookInstance as returned. -->
     <!-- Perhaps add code to link to a "book return" view here. -->
-      {% endif %}
-      </ul>
+          {% endif %}
+          
      {% endblock %}
       </div>
       <div class="col-sm-10 ">

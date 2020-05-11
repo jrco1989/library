@@ -19,6 +19,7 @@ class Genre(models.Model):
         return self.types
  
 class Book(models.Model):
+
     title=models.CharField(
         max_length=100, 
         help_text="enter the book's name"
@@ -43,7 +44,7 @@ class Book(models.Model):
         max_length=13, 
         help_text='13 Caracteres <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>'
     )
-    #isbn=models.Charfield(max_length=50, help_text="enter the ISBN  international standard book number,")
+    
     
     genre=models.ManyToManyField(
         Genre, 
@@ -65,8 +66,8 @@ class Book(models.Model):
         return reverse('book-detail', args=[str(self.id)])
     """
     devuelve un URL que puede ser usado para acceder al detalle de un registro particular
-     (para que esto funcione, debemos definir un mapeo de URL que tenga el nombre book-detail
-      y una vista y una plantilla asociadas a él) """
+    (para que esto funcione, debemos definir un mapeo de URL que tenga el nombre book-detail,
+    una vista y una plantilla asociadas a él) """
     
     def display_genre(self):
         """
@@ -77,7 +78,7 @@ class Book(models.Model):
         return ', '.join([ genre.types for genre in self.genre.all()[:3] ])
    
     display_genre.short_description = 'Genre'
-    
+       
 class BookInstance(models.Model):
     """
     Modelo que representa una copia específica de un libro (i.e. que puede ser prestado por la biblioteca).
@@ -101,7 +102,9 @@ class BookInstance(models.Model):
     )
 
     imprint = models.CharField(
-        max_length=200
+        max_length=200,
+        null=True,
+        blank=True
     )
     
     due_back = models.DateField(
@@ -122,6 +125,7 @@ class BookInstance(models.Model):
         blank=True, default='m', 
         help_text='Disponibilidad del libro'
     )
+
     borrower = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,

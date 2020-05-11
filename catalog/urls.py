@@ -38,6 +38,11 @@ urlpatterns = [
         view=views.AllBorrowedListView.as_view(), 
         name='all-status'
         ),
+    path(
+        route='book/<uuid:pk>/renew/', 
+        view=views.renew_book_librarian, 
+        name='renew-book-librarian'
+        ),
 
 
 ]
