@@ -1,0 +1,17 @@
+{%extends "base2.html"%}
+
+{% block title %} <title>Books Edith</title>{% endblock %}
+
+{% block content %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit" />
+    
+</form>
+
+
+{% endblock %}

@@ -17,8 +17,11 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views import generic
-
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 import datetime
  
 def index(request):
@@ -150,19 +153,36 @@ def renew_book_librarian(request, pk):
             form.save()
             return redirect('book-detail', id=form.pk)"""
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-from .models import Author
 
-class AuthorCreate(CreateView):
+
+class AuthorCreate(PermissionRequiredMixin, CreateView):
     model = Author
     fields = '__all__'
     initial={'date_of_death':'05/01/2018',}
+    permission_required = 'catalog.can_mark_returned'
 
-class AuthorUpdate(UpdateView):
+class AuthorUpdate(PermissionRequiredMixin, UpdateView):
     model = Author
     fields = ['first_name','last_name','date_of_birth','date_of_death']
+    permission_required = 'catalog.can_mark_returned'
 
-class AuthorDelete(DeleteView):
+class AuthorDelete(PermissionRequiredMixin, DeleteView):
+
     model = Author
     success_url = reverse_lazy('authors')
+    permission_required = 'catalog.can_mark_returned'
+
+class BookCreate(PermissionRequiredMixin, CreateView):
+    model = Book
+    fields = '__all__'
+    permission_required = 'catalog.can_mark_returned'
+
+class BookUpdate(PermissionRequiredMixin, UpdateView):
+    model = Book
+    fields = '__all__'
+    permission_required = 'catalog.can_mark_returned'
+
+class BookDelete(PermissionRequiredMixin, DeleteView):
+    model = Book
+    success_url = reverse_lazy('books')
+    permission_required = 'catalog.can_mark_returned'

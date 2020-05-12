@@ -46,7 +46,7 @@ urlpatterns = [
     path(
         route='author/create/', 
         view=views.AuthorCreate.as_view(),
-        name='author_update'
+        name='author_create'
         ),
     path(
         route='author/<int:pk>/update/', 
@@ -58,8 +58,24 @@ urlpatterns = [
         view=views.AuthorDelete.as_view(), 
         name='author_delete'
         ),
-]
+    path(
+        route='book/create/', 
+        view=views.BookCreate.as_view(),
+        name='book_create'
+        ),
+    path(
+        route='book/<int:pk>/update/', 
+        view=views.BookUpdate.as_view(), 
+        name='book_update'
+        ),
+    path(
+        route='book/<int:pk>/delete/', 
+        view=views.BookDelete.as_view(), 
+        name='book_delete'
+        ),
 
+
+]
 urlpatterns += [   
     path(
         route='mybooks/',

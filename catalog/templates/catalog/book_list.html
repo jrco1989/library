@@ -3,14 +3,24 @@
 {% block title %}<title>Poncha la lo </title>{% endblock %}
 
 {% block content %}
-<h1>Book List</h1>
+<h1>Book List
+  {% if perms.catalog.can_mark_returned %}
+  <a class="btn" href="{% url 'book_create' %}"><span class="glyphicon glyphicon-plus"></span></a> 
+{%endif%}  
+  
+</h1>
 
     {% if book_list %}
     <ul>
 
       {% for book in book_list %}
       <li>
-        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> <a href=" {%url 'author-detail' book.author.pk %}">({{book.author}})</a>
+        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a> <a href=" {%url 'author-detail' book.author.pk %}">({{book.author}})
+          {% if perms.catalog.can_mark_returned %}
+          <a class="button" href="{% url 'book_update' pk=book.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+          <a class="btn" href="{% url 'book_delete' pk=book.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+          {% endif %} 
+        </a>
       </li>
       {% endfor %}
 
