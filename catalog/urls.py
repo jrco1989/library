@@ -43,9 +43,23 @@ urlpatterns = [
         view=views.renew_book_librarian, 
         name='renew-book-librarian'
         ),
-
-
+    path(
+        route='author/create/', 
+        view=views.AuthorCreate.as_view(),
+        name='author_update'
+        ),
+    path(
+        route='author/<int:pk>/update/', 
+        view=views.AuthorUpdate.as_view(), 
+        name='author_update'
+        ),
+    path(
+        route='author/<int:pk>/delete/', 
+        view=views.AuthorDelete.as_view(), 
+        name='author_delete'
+        ),
 ]
+
 urlpatterns += [   
     path(
         route='mybooks/',

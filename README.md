@@ -8,16 +8,17 @@ Los usuarios están dividios en dos grupos, usurarios comunes y trabajadores de 
 
 Esta aplicación le permite a los usuarios comunes:
     
-    -registrarse  /NO
-    -consultar los libros almacenados por título o author.
-    -consultar los libros que has leído y los que tienes reservados /No
+    
+    -Consultar los libros almacenados por título o author.
+    -Consultar los libros que has leído y los que tienes reservados /No
     -Reservar libros para préstamo /No
+    -Registrarse  /NO
     
 
 
 Y a los usuarios con permisos:   
-    -Crear, editar o eliminar libros y authores /No
-    -Cambiar o renovar el estado de los libros /No
+    -Crear, editar o eliminar libros y authores /Si
+    -Renovar las frechas delos libros prestados libros /Si
     -Cambiar y consultar el estado de todos los libros (resaltando los libros con fechas de devolución vencidas).  /No
 
     
