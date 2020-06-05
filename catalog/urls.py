@@ -73,6 +73,11 @@ urlpatterns = [
         view=views.BookDelete.as_view(), 
         name='book_delete'
         ),
+    path(
+        route='bookInstance/<int:pk>/', 
+        view=views.BookInstanceCreate.as_view(),
+        name='bookinstance-create'
+        ),
 
 
 ]
@@ -82,4 +87,5 @@ urlpatterns += [
         view= views.LoanedBooksByUserListView.as_view(), 
         name='my-borrowed'
         ),
+        
 ]

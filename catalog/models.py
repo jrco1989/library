@@ -152,7 +152,7 @@ class BookInstance(models.Model):
         if self.due_back and date.today() > self.due_back:
             return True
         return False
-
+    
 class Author(models.Model):
 
     first_name = models.CharField(

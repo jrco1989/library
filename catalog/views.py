@@ -23,7 +23,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 import datetime
- 
+
 def index(request):
    
     num_books=Book.objects.all()
@@ -57,10 +57,10 @@ def index(request):
                  'num_visits':num_visits},
     )
 
-class BookListView(generic.ListView):
+class BookListView(generic.ListView): 
     
     model = Book
-    paginate_by = 2 # se realiza la paginación para que no cargue todos los registros al tiempo y paginarlos, esto mejora el rendimiento
+    paginate_by = 10 # se realiza la paginación para que no cargue todos los registros al tiempo y paginarlos, esto mejora el rendimiento
     #context_object_name = 'book'   # your own name for the list as a template variable
     #template_name = 'books/my_arbitrary_template_name_list.html'  # Specify your own template name/location
     
@@ -85,15 +85,16 @@ class BookListView(generic.ListView):
         
 class BookDetailView(generic.DetailView):
     model = Book
-    paginate_by=1
+    paginate_by=10
+    
 
 class AuthorListView (generic.ListView):
     model= Author
-    paginate_by=3
+    paginate_by=10
 
 class AuthorDetailView(generic.DetailView):
     model = Author
-    paginate_by=1
+    paginate_by=10
  
 @login_required
 def partida(request):
@@ -186,3 +187,24 @@ class BookDelete(PermissionRequiredMixin, DeleteView):
     model = Book
     success_url = reverse_lazy('books')
     permission_required = 'catalog.can_mark_returned'
+
+class BookInstanceCreate(PermissionRequiredMixin, CreateView):
+    model= BookInstance
+    fields = ['language','imprint','due_back','status']
+    permission_required = 'catalog,can_mark_returned'
+    
+    def get_success_url(self):
+        return reverse('book-detail', args = [self.object.book.id])
+    
+    def form_valid(self, form):
+        form.instance.book = Book.objects.get(id=self.kwargs.get('pk'))
+    
+        return super().form_valid(form)
+
+
+"""@permission_required('catalog.can_mark_returned')
+def new_bookinstance(request, pk):"""
+
+
+    
+    

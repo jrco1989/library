@@ -5,6 +5,9 @@
 {% block content %}
 <div style="margin-left:20px;margin-top:20px">
   <h1>Title: {{ book.title }}</h1>
+  {% if perms.catalog.can_mark_returned %}
+    <a class="btn" href="{% url 'bookinstance-create' object.pk %}"><span class="glyphicon glyphicon-plus"></span></a> 
+  {%endif%} 
 
   <p><strong>Author:</strong> <a href="{% url 'author-detail' book.author.pk %}">{{ book.author }}</a></p> 
   <p><strong>Summary:</strong> {{ book.summary }}</p>
